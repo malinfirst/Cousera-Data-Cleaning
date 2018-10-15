@@ -1,0 +1,19 @@
+Relative
+
+#move down
+setwd("./folder")
+
+#move up
+setwd("../")
+
+Absolute
+
+#need to specify detail path
+
+#Checking for and creating directories
+#Here is and example checking for a data directory and creating it if it doesn't exist.
+
+if(!file.exist("data")){
+    dir.create("data")
+}
+
