@@ -1,0 +1,18 @@
+#Question 1
+#Use Data Frame
+download.file("https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2Fss06hid.csv",destfile = "American_Community_Survey.csv")
+
+ACS<-read.csv("American_Community_Survey.csv")
+summary(ACS)
+library(dplyr)
+ACS %>% 
+  select(VAL) %>%
+  filter(VAL==24) %>%
+  count(VAL)
+
+
+#Use Data Table Recommended: It's faster and easier and less code and package 
+data.table::fread("https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2Fss06hid.csv")
+ACS_dt<-data.table::fread("https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2Fss06hid.csv")
+ACS_dt[VAL==24,.N]
+
