@@ -16,3 +16,34 @@ data.table::fread("https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2Fss06hi
 ACS_dt<-data.table::fread("https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2Fss06hid.csv")
 ACS_dt[VAL==24,.N]
 
+
+
+#Question 3
+
+#Hard Part actually is the installation of 'xlsx' package, you may need to install rJava at first.
+library(xlsx)
+download.file("https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2FDATA.gov_NGAP.xlsx",destfile = "dat.xlsx",method = "curl")
+dat<-read.xlsx("dat.xlsx",sheetIndex = 1,colIndex = 7:15,rowIndex = 18:23)
+sum(dat$Zip*dat$Ext,na.rm=T)
+
+
+
+#Question 4
+install.packages("XML")
+library(XML)
+b_r<-xmlTreeParse("http://d396qusza40orc.cloudfront.net/getdata%2Fdata%2Frestaurants.xml",useInternal = TRUE)
+rootnode<-xmlRoot(b_r)
+a<-xpathSApply(rootnode,"//zipcode",xmlValue)
+a<-data.table::data.table(a)
+a[a==21231,.N]
+
+
+#Question 5
+download.file("https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2Fss06pid.csv",destfile = "ACS.csv")
+DT<-data.table::fread("ACS.csv")
+head(DT)
+head(DT$pwgtp15)
+DT[,mean(pwgtp15),by=SEX]
+system.time(mean(DT[DT$SEX==1,]$pwgtp15))
+system.time(sapply(split(DT$pwgtp15,DT$SEX),mean))
+system.time(DT[,mean(pwgtp15),by=SEX])
