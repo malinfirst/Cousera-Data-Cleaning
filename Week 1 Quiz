@@ -31,11 +31,11 @@ sum(dat$Zip*dat$Ext,na.rm=T)
 #Question 4
 install.packages("XML")
 library(XML)
-b_r<-xmlTreeParse("http://d396qusza40orc.cloudfront.net/getdata%2Fdata%2Frestaurants.xml",useInternal = TRUE)
+b_r<-xmlTreeParse("http://d396qusza40orc.cloudfront.net/getdata%2Fdata%2Frestaurants.xml",useInternalNodes = TRUE)
 rootnode<-xmlRoot(b_r)
-a<-xpathSApply(rootnode,"//zipcode",xmlValue)
-a<-data.table::data.table(a)
-a[a==21231,.N]
+zipcode<-xpathSApply(rootnode,"//zipcode",xmlValue)
+zipcode_dt<-data.table::data.table(zipcode)
+zipcode_dt[zipcode==21231,.N]
 
 
 #Question 5
